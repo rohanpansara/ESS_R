@@ -33,6 +33,20 @@ li {
 	--green: #65B741;
 	--light-green: #84b071;
 
+	/* BOX-INFO COLORS */
+	--base-red: #cd5c5c;
+	--mid-red: #FBCEB1;
+	--top-red: #e34234;
+
+	--base-green: #3eb489;
+	--mid-green: #355e3b;
+	--top-green: #5edc1f;
+
+	--base-purple: #9400d3;
+	--mid-purple: #fff0f5;
+	--top-purple: #66023c;
+
+	/* CALENDAR COLORS */
 	--calendar-back: #f5f5f5;
 	--calendar-font: #858585;
 	--calendar-weekend: #ff0038;
@@ -66,24 +80,39 @@ body {
 .loader {
 	width: 55px;
 	aspect-ratio: 1;
-	--g1:conic-gradient(from  90deg at top    3px left  3px,#0000 90deg,var(--dark) 0);
-	--g2:conic-gradient(from -90deg at bottom 3px right 3px,#0000 90deg,var(--dark) 0);
+	--g1: conic-gradient(from 90deg at top 3px left 3px, #0000 90deg, var(--dark) 0);
+	--g2: conic-gradient(from -90deg at bottom 3px right 3px, #0000 90deg, var(--dark) 0);
 	background:
-	  var(--g1),var(--g1),var(--g1),var(--g1), 
-	  var(--g2),var(--g2),var(--g2),var(--g2);
-	background-position: 0 0,100% 0,100% 100%,0 100%;
+		var(--g1), var(--g1), var(--g1), var(--g1),
+		var(--g2), var(--g2), var(--g2), var(--g2);
+	background-position: 0 0, 100% 0, 100% 100%, 0 100%;
 	background-size: 25px 25px;
 	background-repeat: no-repeat;
 	animation: l11 1.5s infinite;
-	
-  }
-  @keyframes l11 {
-	0%   {background-size:35px 15px,15px 15px,15px 35px,35px 35px}
-	25%  {background-size:35px 35px,15px 35px,15px 15px,35px 15px}
-	50%  {background-size:15px 35px,35px 35px,35px 15px,15px 15px}
-	75%  {background-size:15px 15px,35px 15px,35px 35px,15px 35px}
-	100% {background-size:35px 15px,15px 15px,15px 35px,35px 35px}
-  }
+
+}
+
+@keyframes l11 {
+	0% {
+		background-size: 35px 15px, 15px 15px, 15px 35px, 35px 35px
+	}
+
+	25% {
+		background-size: 35px 35px, 15px 35px, 15px 15px, 35px 15px
+	}
+
+	50% {
+		background-size: 15px 35px, 35px 35px, 35px 15px, 15px 15px
+	}
+
+	75% {
+		background-size: 15px 15px, 35px 15px, 35px 35px, 15px 35px
+	}
+
+	100% {
+		background-size: 35px 15px, 15px 15px, 15px 35px, 35px 35px
+	}
+}
 
 
 
@@ -578,7 +607,7 @@ body {
 	margin-top: 36px;
 }
 
-#content main .box-info li{
+#content main .box-info li {
 	padding: 24px;
 	background: var(--light);
 	border-radius: 20px;
@@ -683,38 +712,88 @@ body {
 
 
 /* Blue */
-#content main .box-info li:not(.calendars):nth-child(3n+1){
-	background: #FBCEB1;
+#content main .box-info li:not(.calendars):nth-child(3n+1) {
+	background: var(--base-purple);
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
 }
 
 #content main .box-info li:not(.calendars):nth-child(3n+1) .bx {
-	background: var(--light-blue);
-	fill: #0892d0;
+	background: var(--mid-purple);
+	fill: var(--top-purple);
 }
 
-/* Yellow */
-#content main .box-info li:not(.calendars):nth-child(3n+2){
-	background: #FBCEB1;
+#content main .box-info li:not(.calendars):nth-child(3n+1) .text,
+#content main .box-info li:not(.calendars):nth-child(3n+1) .text p {
+	color: var(--mid-purple);
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+1) .text .first {
+	font-size: 24px;
+	font-weight: 800;
+	padding-right: 2px;
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+1) .text .second {
+	font-size: 24px;
+	font-weight: 400;
+}
+
+/* Green */
+#content main .box-info li:not(.calendars):nth-child(3n+2) {
+	background: var(--base-green);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
 }
 
 #content main .box-info li:not(.calendars):nth-child(3n+2) .bx {
-	background: var(--light-yellow);
-	fill: darkgoldenrod;
+	background: var(--mid-green);
+	fill: var(--top-green);
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+2) .text,
+#content main .box-info li:not(.calendars):nth-child(3n+2) .text p {
+	color: var(--mid-green);
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+2) .text .first {
+	font-size: 24px;
+	font-weight: 800;
+	padding-right: 2px;
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+2) .text .second {
+	font-size: 24px;
+	font-weight: 400;
 }
 
 /* Red */
-#content main .box-info li:not(.calendars):nth-child(3n+3){
-	background: #FBCEB1;
+#content main .box-info li:not(.calendars):nth-child(3n+3) {
+	background: var(--base-red);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
 }
 
 #content main .box-info li:not(.calendars):nth-child(3n+3) .bx {
-	background: #e34234;
-	fill: #FBCEB1;
+	background: var(--mid-red);
+	fill: var(--top-red);
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+3) .text,
+#content main .box-info li:not(.calendars):nth-child(3n+3) .text p {
+	color: var(--mid-red);
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+3) .text .first {
+	font-size: 24px;
+	font-weight: 800;
+	padding-right: 2px;
+}
+
+#content main .box-info li:not(.calendars):nth-child(3n+3) .text .second {
+	font-size: 24px;
+	font-weight: 400;
 }
 
 
-#content main .box-info li .text{
+#content main .box-info li .text {
 	font-size: 16px;
 	font-weight: 600;
 	color: var(--dark);
@@ -797,11 +876,11 @@ body {
 	border: none;
 }
 
-.table-button.close{
+.table-button.close {
 	color: var(--red);
 }
 
-.table-button.close:hover{
+.table-button.close:hover {
 	color: var(--light);
 	background-color: var(--red);
 	cursor: pointer;
@@ -838,7 +917,7 @@ body {
 	padding-left: 0;
 	text-align: left;
 }
-  
+
 
 
 .pagination {
@@ -848,9 +927,9 @@ body {
 	list-style-type: none;
 	padding: 0;
 	padding-top: 10px;
-  }
-  
-  .pagination .previous {
+}
+
+.pagination .previous {
 	margin-right: auto;
 	cursor: pointer;
 	background: var(--blue);
@@ -859,15 +938,24 @@ body {
 	color: var(--light);
 	border-radius: 20px;
 	font-weight: 700;
-  }
+}
 
-  .pagination li{
+.pagination .previous.active {
+	background: royalblue;
+}
+
+.pagination .previous:not(.active):hover {
+	background: royalblue;
+	transition: 0.3s ease;
+}
+
+.pagination li {
 	font-size: 12px;
 	margin-right: 10px;
-	padding:0 16px;
-  }
+	padding: 0 16px;
+}
 
-  .pagination li.active{
+.pagination li.active {
 	cursor: pointer;
 	background: var(--blue);
 	font-size: 14px;
@@ -875,16 +963,16 @@ body {
 	color: var(--light);
 	border-radius: 20px;
 	font-weight: 700;
-  }
+}
 
-  .pagination li:not(.active):hover {
+.pagination li:not(.active):hover {
 	background: var(--blue);
 	color: var(--light);
 	border-radius: 20px;
 	padding: 6px 16px;
-  }
+}
 
-  .pagination .next {
+.pagination .next {
 	margin-left: auto;
 	cursor: pointer;
 	background: var(--blue);
@@ -893,9 +981,17 @@ body {
 	color: var(--light);
 	border-radius: 20px;
 	font-weight: 700;
-  }
-  
-  
+}
+
+.pagination .next.active {
+	background: royalblue;
+}
+
+.pagination .next:not(.active):hover {
+	background: royalblue;
+	transition: 0.3s ease;
+}
+
 
 #content main .table-data .order table tr td:first-child {
 	display: flex;
