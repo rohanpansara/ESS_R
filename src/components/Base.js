@@ -101,7 +101,7 @@ const Base = ({ page }) => {
         </a>
         <ul className="side-menu top">
           <li className={page === "dashboard" ? "active" : ""}>
-            <a href="/">
+            <a href="/user/dashboard">
               <svg
                 className="bx"
                 xmlns="http://www.w3.org/2000/svg"
