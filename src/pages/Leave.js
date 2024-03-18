@@ -93,6 +93,7 @@ const Leave = () => {
                       <th>Reason</th>
                       <th>Absence From</th>
                       <th>Absence To</th>
+                      <th>Type</th>
                       <th>Status</th>
                     </tr>
                   </thead>
@@ -109,6 +110,11 @@ const Leave = () => {
                         <td>{`${("0" + leave.to[2]).slice(-2)}/${(
                           "0" + leave.to[1]
                         ).slice(-2)}/${leave.to[0]}`}</td>
+                        <td>
+                          <span className={`type ${leave.type.toLowerCase()}`}>
+                            {leave.type}
+                          </span>
+                        </td>
                         <td>
                           <span
                             className={`status ${leave.status.toLowerCase()}`}
@@ -133,7 +139,7 @@ const Leave = () => {
             <div className="table-data">
               <div className="order">
                 <form>
-                  <div className="parentAddEmployee">
+                  {/* <div className="parentAddEmployee">
                     <div className="div1">
                       <h2>Employee Details</h2>
                     </div>
@@ -142,14 +148,18 @@ const Leave = () => {
                       <input type="text" id="firstname" name="firstname" />
                     </div>
                     <div className="div3">
-                      <label htmlFor="middlename">Middle Name</label>
-                      <input type="text" id="middlename" name="middlename" />
+                      <label htmlFor="birthdate">Birthdate</label>
+                      <input type="date" id="birthdate" name="birthdate" />
                     </div>
                     <div className="div4">
-                      <label htmlFor="lastname">Last Name</label>
-                      <input type="text" id="lastname" name="lastname" />
+                      <label htmlFor="date_of_joining">Joining Date</label>
+                      <input
+                        type="date"
+                        id="date_of_joining"
+                        name="dateOfJoining"
+                      />
                     </div>
-                    <div className="div5">
+                     <div className="div5">
                       <label htmlFor="email">Email</label>
                       <input type="email" id="email" name="email" />
                     </div>
@@ -232,8 +242,33 @@ const Leave = () => {
                         id="date_of_joining"
                         name="dateOfJoining"
                       />
-                    </div>
+                    </div> 
                     <div className="div14">
+                      <button type="submit">ADD</button>
+                    </div>
+                  </div>*/}
+                  <div class="parentAddEmployee">
+                    <div class="div1">
+                      <h2>Leave Details</h2>
+                    </div>
+                    <div class="div6">
+                      <button className="table-button" onClick={toggleShowTable}>
+                        Apply For Leave
+                      </button>
+                    </div>
+                    <div class="div2">
+                      <label htmlFor="l_reason">Reason</label>
+                      <input type="text" id="l_reason" name="l_reason" />
+                    </div>
+                    <div class="div3">
+                      <label htmlFor="birthdate">Absence From</label>
+                      <input type="date" id="l_from" name="l_from" />
+                    </div>
+                    <div class="div4">
+                      <label htmlFor="l_to">Absence To</label>
+                      <input type="date" id="l_to" name="l_to" />
+                    </div>
+                    <div class="div5">
                       <button type="submit">ADD</button>
                     </div>
                   </div>
@@ -242,6 +277,7 @@ const Leave = () => {
             </div>
           )}
         </main>
+        <Toaster richColors />
       </div>
     </>
   );
