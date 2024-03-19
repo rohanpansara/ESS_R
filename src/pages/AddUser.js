@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Toaster, toast } from "sonner";
 // import { useNavigate } from "react-router-dom";
-import Base from "../components/Base";
+// import Base from "../components/Base";
 import "../styles/adduser.css";
 import axios from "axios";
 

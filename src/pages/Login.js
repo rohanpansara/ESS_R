@@ -63,7 +63,7 @@ const Login = () => {
             localStorage.setItem("token", token);
             localStorage.setItem("employeeId", employee.id);
             navigate("/user/dashboard");
-            return `${employee.name}'s toast has been added.`;
+            return `${employee.id}'s toast has been added.`;
           },
           error: (error) => {
             if (error.response && error.response.status === 403) {
@@ -77,7 +77,6 @@ const Login = () => {
           },
         }
       );
-      console.log(response); // This will log the success message returned from the promise
     } catch (error) {
       console.error("An unexpected error occurred:", error);
     }
@@ -85,10 +84,10 @@ const Login = () => {
 
 
   return (
-    <body className="loginbody">
+    <div className="loginbody">
       <Toaster richColors />
       <div className="login-container">
-        <section class="first-section">
+        <section className="first-section">
           <img src={require("../images/illustration.webp")} alt="Workplace" />
         </section>
         <section className="second-section">
@@ -165,7 +164,7 @@ const Login = () => {
           </main>
         </section>
       </div>
-    </body>
+    </div>
   );
 };
 

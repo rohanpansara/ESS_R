@@ -6,12 +6,12 @@ const Landing = () => {
     const navigate = useNavigate();
 
     useEffect(() => {
-        // if (localStorage.getItem("employeeId") != undefined || !localStorage.getItem("employeeId")) {
-        //     navigate("/user/dashboard");
-        // }
-        // else {
-        //     navigate("/login");
-        // }
+        if (localStorage.getItem("employeeId") !== undefined || !localStorage.getItem("employeeId")) {
+            navigate("/user/dashboard");
+        }
+        else {
+            navigate("/login");
+        }
         document.title = `ESS`
     }, [])
 

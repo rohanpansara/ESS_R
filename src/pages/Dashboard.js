@@ -15,15 +15,17 @@ const Dashboard = () => {
   const employeeName = localStorage.getItem("employeeName");
 
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [employeeData, setEmployeeData] = useState(null);
   const [leaveData, setLeaveData] = useState([]);
   const [workHours, setWorkHours] = useState(null);
+  const [finalPunchOut, setFinalPunchOut] = useState(null);
   const [holidays, setHolidays] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!token) {
+        if (!token || token===undefined) {
           localStorage.clear();
           toast.error("Please login first");
           navigate("/login", { state: { fromLogout: true } });
@@ -41,7 +43,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [navigate, token]);
+  },[]);
 
   useEffect(() => {
     if (employeeName !== undefined) {
@@ -49,7 +51,7 @@ const Dashboard = () => {
     } else {
       document.title = "Dashboard | ESS";
     }
-  }, []);
+  },[]);
 
   const fetchEmployeeDetails = async () => {
     try {
@@ -70,6 +72,7 @@ const Dashboard = () => {
       if (success) {
         setEmployeeData(data);
         localStorage.setItem("employeeName", data.firstname);
+        localStorage.setItem("employeeFullName", data.firstname+" "+data.lastname)
       } else {
         toast.error(message || "Couldn't load employee data");
       }
@@ -79,7 +82,7 @@ const Dashboard = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5; // Number of items to display per page
+  const itemsPerPage = 1; // Number of items to display per page
 
   // Pagination configuration
   const pageCount = Math.ceil(leaveData.length / itemsPerPage);
@@ -124,11 +127,8 @@ const Dashboard = () => {
   const fetchWorkHours = async () => {
     try { // assuming you have the token available
       const response = await axios.get(
-        "http://localhost:8080/auth/user/attendance",
+        "http://localhost:8080/auth/attendance",
         {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
           params: {
             id: localStorage.getItem("employeeId"),
           },
@@ -139,6 +139,7 @@ const Dashboard = () => {
 
       if (success) {
         setWorkHours(data.workHours); // set work hours from the response
+        setFinalPunchOut(data.finalPunchOutTime); // set final punch out time from the response
       } else {
         toast.error(message || "Couldn't load work hours data");
       }
@@ -147,7 +148,6 @@ const Dashboard = () => {
     }
   };
 
-  // Update document title when employeeData changes
 
   useEffect(() => {
     axios
@@ -175,11 +175,13 @@ const Dashboard = () => {
   return (
     <>
       {loading && (
+        <>
         <div id="content">
           <main>
             <div className="loader"></div>
           </main>
         </div>
+        </>
       )}
       {!loading && (
         <>
@@ -214,6 +216,7 @@ const Dashboard = () => {
                 <li className="calendars">
                   <Calendar
                     showNeighboringMonth={false}
+                    
                     tileClassName={({ date }) => {
                       const formattedDate = moment(date).format("YYYY-MM-DD");
                       if (holidays.includes(formattedDate)) {
@@ -229,6 +232,40 @@ const Dashboard = () => {
                 </li>
               </ul>
               <ul className="box-info">
+              <li>
+                  <svg
+                    className="bx"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="m656-120-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Zm-416-80q17 0 28.5-11.5T280-240q0-17-11.5-28.5T240-280q-17 0-28.5 11.5T200-240q0 17 11.5 28.5T240-200Zm0 80q-50 0-85-35t-35-85q0-50 35-85t85-35q37 0 67.5 20.5T352-284q39-11 63.5-43t24.5-73v-160q0-83 58.5-141.5T640-760h46l-63-63 57-57 160 160-160 160-57-56 63-64h-46q-50 0-85 35t-35 85v160q0 73-47 128.5T354-203q-12 37-43.5 60T240-120Zm-64-480-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Z" />
+                  </svg>
+                  <span className="text">
+                    <span className="first">04</span>
+                    <p>Projects Assigned</p>
+                  </span>
+                </li>
+                <li>
+                  <svg className="bx" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z" /></svg>
+                  <span className="text">
+                    {workHours !== null ? (
+                      <span className="first">{workHours}</span>
+                    ) : (
+                      <span className="second">Calculating...</span>
+                    )}
+                    <p>Work Hours</p>
+                  </span>
+                  <span className="text">
+                  {finalPunchOut !== null ? (
+                      <span className="first">{finalPunchOut}</span>
+                    ) : (
+                      <span className="second">Calculating...</span>
+                    )}
+                    <p>Can Leave By</p>
+                  </span>
+                </li>
                 <li>
                   <svg
                     className="bx"
@@ -242,32 +279,6 @@ const Dashboard = () => {
                   <span className="text">
                     <span className="first">{leaveData.length}</span><span className="second">/18</span>
                     <p>Leaves Applied</p>
-                  </span>
-                </li>
-                <li>
-                  <svg className="bx" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z" /></svg>
-                  <span className="text">
-                    {workHours !== null ? (
-                      <span className="first">{workHours}</span>
-                    ) : (
-                      <span className="first">Calculating...</span>
-                    )}
-                    <p>Work Hours</p>
-                  </span>
-                </li>
-                <li>
-                  <svg
-                    className="bx"
-                    xmlns="http://www.w3.org/2000/svg"
-                    height="24"
-                    viewBox="0 -960 960 960"
-                    width="24"
-                  >
-                    <path d="m656-120-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Zm-416-80q17 0 28.5-11.5T280-240q0-17-11.5-28.5T240-280q-17 0-28.5 11.5T200-240q0 17 11.5 28.5T240-200Zm0 80q-50 0-85-35t-35-85q0-50 35-85t85-35q37 0 67.5 20.5T352-284q39-11 63.5-43t24.5-73v-160q0-83 58.5-141.5T640-760h46l-63-63 57-57 160 160-160 160-57-56 63-64h-46q-50 0-85 35t-35 85v160q0 73-47 128.5T354-203q-12 37-43.5 60T240-120Zm-64-480-56-56 63-64-63-63 56-57 64 64 63-64 57 57-64 63 64 64-57 56-63-63-64 63Z" />
-                  </svg>
-                  <span className="text">
-                    <span className="first">04</span>
-                    <p>Projects Assigned</p>
                   </span>
                 </li>
               </ul>
