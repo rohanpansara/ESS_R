@@ -374,7 +374,7 @@ body {
 	position: sticky;
 	top: 0;
 	left: 0;
-	z-index: 1000;
+	z-index: 1999;
 }
 
 #content nav::before {
@@ -849,7 +849,7 @@ body {
 
 #content main .table-data .head h3 {
 	margin-right: auto;
-	font-size: 24px;
+	font-size: 18px;
 	font-weight: 600;
 }
 
@@ -907,13 +907,14 @@ body {
 
 #content main .table-data .order table th {
 	padding-bottom: 12px;
-	font-size: 13px;
+	font-size: 14px;
 	text-align: left;
 	border-bottom: 1px solid var(--grey);
 }
 
 #content main .table-data .order table td {
-	padding: 16px 8px;
+	font-size: 12px;
+	padding: 10px 8px;
 	padding-left: 0;
 	text-align: left;
 }
@@ -922,14 +923,20 @@ body {
 
 .pagination {
 	display: flex;
-	justify-content: space-between;
-	align-items: center;
 	list-style-type: none;
 	padding: 0;
 	padding-top: 10px;
 }
 
-.pagination .previous {
+.pagination li.previous{
+	margin-right: auto;
+}
+
+.pagination li.next{
+	margin-left: auto;
+}
+
+.pagination .previous a{
 	margin-right: auto;
 	cursor: pointer;
 	background: var(--blue);
@@ -940,22 +947,27 @@ body {
 	font-weight: 700;
 }
 
-.pagination .previous.active {
+.pagination .previous.active a{
 	background: royalblue;
 }
 
-.pagination .previous:not(.active):hover {
+.pagination .previous.disabled a{
+	background: gray;
+}
+
+.pagination .previous:not(.disabled) a:hover {
 	background: royalblue;
 	transition: 0.3s ease;
 }
 
-.pagination li {
+.pagination li a{
 	font-size: 12px;
 	margin-right: 10px;
 	padding: 0 16px;
+	cursor: pointer;
 }
 
-.pagination li.active {
+.pagination li.active a{
 	cursor: pointer;
 	background: var(--blue);
 	font-size: 14px;
@@ -965,14 +977,14 @@ body {
 	font-weight: 700;
 }
 
-.pagination li:not(.active):hover {
+.pagination li:not(.disabled) a:hover {
 	background: var(--blue);
 	color: var(--light);
 	border-radius: 20px;
 	padding: 6px 16px;
 }
 
-.pagination .next {
+.pagination .next a{
 	margin-left: auto;
 	cursor: pointer;
 	background: var(--blue);
@@ -983,11 +995,15 @@ body {
 	font-weight: 700;
 }
 
-.pagination .next.active {
+.pagination .next.active a{
 	background: royalblue;
 }
 
-.pagination .next:not(.active):hover {
+.pagination .next.disabled a{
+	background: gray;
+}
+
+.pagination .next:not(.disabled) a:hover {
 	background: royalblue;
 	transition: 0.3s ease;
 }
