@@ -33,6 +33,13 @@ li {
 	--green: #65B741;
 	--light-green: #84b071;
 
+	--form-bg: #ffffff; /* White background */
+  --form-field: #f0f0f0; /* Light gray for enabled form fields */
+  --form-field-disabled: lightgray; /* Lighter gray for disabled form fields */
+  --form-font: #333333; /* Dark gray for form text */
+  --form-font-disabled: #999999; /* Lighter gray for disabled form text */
+  --form-field-border: #ccc;
+
 	/* BOX-INFO COLORS */
 	--base-red: #cd5c5c;
 	--mid-red: #FBCEB1;
@@ -68,6 +75,13 @@ body.dark {
 	--calendar-weekend: #BD2031;
 
 	--white: #1e1e1e;
+
+	--form-bg: #333333; /* Dark background */
+    --form-field: #464646; /* Dark gray for enabled form fields */
+    --form-field-disabled: darkgray; /* Slightly lighter gray for disabled form fields */
+    --form-font: #ffffff; /* White for form text */
+    --form-font-disabled: #b0b0b0; /* Light gray for disabled form text */
+	--form-field-border: #342E37;
 }
 
 body {
@@ -913,12 +927,18 @@ body {
 }
 
 #content main .table-data .order table td {
-	font-size: 12px;
+	font-size: 13px;
 	padding: 10px 8px;
 	padding-left: 0;
 	text-align: left;
 }
 
+.noLeavesFound,.noEmployeesFound{
+	color: var(--dark-grey);
+    text-align: left;
+    font-style: italic;
+    font-weight: 300;
+}
 
 
 .pagination {
@@ -1056,12 +1076,16 @@ body {
 }
 
 
-#content main .table-data .order table tr td .type.paid {
-	background: var(--green);
+#content main .table-data .order table tr td .type.privilege {
+	background: var(--base-green);
 }
 
-#content main .table-data .order table tr td .type.unpaid {
+#content main .table-data .order table tr td .type.maternity {
 	background: var(--calendar-weekend);
+}
+
+#content main .table-data .order table tr td .type.paternity {
+	background: var(--yellow);
 }
 
 
