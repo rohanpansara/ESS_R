@@ -25,7 +25,7 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        if (!token || token===undefined) {
+        if (!token || token === undefined) {
           localStorage.clear();
           toast.error("Please login first");
           navigate("/login", { state: { fromLogout: true } });
@@ -43,15 +43,13 @@ const Dashboard = () => {
     };
 
     fetchData();
-  },[]);
+  }, []);
 
   useEffect(() => {
-    if (employeeName !== undefined) {
-      document.title = `Dashboard | ${employeeName}`;
-    } else {
-      document.title = "Dashboard | ESS";
-    }
-  },[]);
+    document.title = employeeName
+      ? `Dashboard | ${employeeName}`
+      : "Dashboard | ESS";
+  }, [employeeName]);
 
   const fetchEmployeeDetails = async () => {
     try {
@@ -72,7 +70,10 @@ const Dashboard = () => {
       if (success) {
         setEmployeeData(data);
         localStorage.setItem("employeeName", data.firstname);
-        localStorage.setItem("employeeFullName", data.firstname+" "+data.lastname)
+        localStorage.setItem(
+          "employeeFullName",
+          data.firstname + " " + data.lastname
+        );
       } else {
         toast.error(message || "Couldn't load employee data");
       }
@@ -125,7 +126,8 @@ const Dashboard = () => {
   };
 
   const fetchWorkHours = async () => {
-    try { // assuming you have the token available
+    try {
+      // assuming you have the token available
       const response = await axios.get(
         "http://localhost:8080/auth/attendance",
         {
@@ -147,7 +149,6 @@ const Dashboard = () => {
       toast.error("Error loading work hours: " + error.message);
     }
   };
-
 
   useEffect(() => {
     axios
@@ -176,11 +177,11 @@ const Dashboard = () => {
     <>
       {loading && (
         <>
-        <div id="content">
-          <main>
-            <div className="loader"></div>
-          </main>
-        </div>
+          <div id="content">
+            <main>
+              <div className="loader"></div>
+            </main>
+          </div>
         </>
       )}
       {!loading && (
@@ -216,7 +217,6 @@ const Dashboard = () => {
                 <li className="calendars">
                   <Calendar
                     showNeighboringMonth={false}
-                    
                     tileClassName={({ date }) => {
                       const formattedDate = moment(date).format("YYYY-MM-DD");
                       if (holidays.includes(formattedDate)) {
@@ -232,7 +232,7 @@ const Dashboard = () => {
                 </li>
               </ul>
               <ul className="box-info">
-              <li>
+                <li>
                   <svg
                     className="bx"
                     xmlns="http://www.w3.org/2000/svg"
@@ -248,7 +248,15 @@ const Dashboard = () => {
                   </span>
                 </li>
                 <li>
-                  <svg className="bx" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z" /></svg>
+                  <svg
+                    className="bx"
+                    xmlns="http://www.w3.org/2000/svg"
+                    height="24"
+                    viewBox="0 -960 960 960"
+                    width="24"
+                  >
+                    <path d="M360-840v-80h240v80H360Zm80 440h80v-240h-80v240Zm40 320q-74 0-139.5-28.5T226-186q-49-49-77.5-114.5T120-440q0-74 28.5-139.5T226-694q49-49 114.5-77.5T480-800q62 0 119 20t107 58l56-56 56 56-56 56q38 50 58 107t20 119q0 74-28.5 139.5T734-186q-49 49-114.5 77.5T480-80Zm0-80q116 0 198-82t82-198q0-116-82-198t-198-82q-116 0-198 82t-82 198q0 116 82 198t198 82Zm0-280Z" />
+                  </svg>
                   <span className="text">
                     {workHours !== null ? (
                       <span className="first">{workHours}</span>
@@ -258,7 +266,7 @@ const Dashboard = () => {
                     <p>Work Hours</p>
                   </span>
                   <span className="text">
-                  {finalPunchOut !== null ? (
+                    {finalPunchOut !== null ? (
                       <span className="first">{finalPunchOut}</span>
                     ) : (
                       <span className="second">Calculating...</span>
@@ -277,7 +285,8 @@ const Dashboard = () => {
                     <path d="m696-440-56-56 83-84-83-83 56-57 84 84 83-84 57 57-84 83 84 84-57 56-83-83-84 83Zm-336-40q-66 0-113-47t-47-113q0-66 47-113t113-47q66 0 113 47t47 113q0 66-47 113t-113 47ZM40-160v-112q0-34 17.5-62.5T104-378q62-31 126-46.5T360-440q66 0 130 15.5T616-378q29 15 46.5 43.5T680-272v112H40Zm80-80h480v-32q0-11-5.5-20T580-306q-54-27-109-40.5T360-360q-56 0-111 13.5T140-306q-9 5-14.5 14t-5.5 20v32Zm240-320q33 0 56.5-23.5T440-640q0-33-23.5-56.5T360-720q-33 0-56.5 23.5T280-640q0 33 23.5 56.5T360-560Zm0-80Zm0 400Z" />
                   </svg>
                   <span className="text">
-                    <span className="first">{leaveData.length}</span><span className="second">/18</span>
+                    <span className="first">{leaveData.length}</span>
+                    <span className="second">/18</span>
                     <p>Leaves Applied</p>
                   </span>
                 </li>
@@ -298,27 +307,33 @@ const Dashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {displayedData.map((leave) => (
-                        <tr key={leave.id}>
-                          <td>{`${("0" + leave.appliedOn[2]).slice(-2)}/${(
-                            "0" + leave.appliedOn[1]
-                          ).slice(-2)}/${leave.appliedOn[0]}`}</td>
-                          <td>{leave.reason}</td>
-                          <td>{`${("0" + leave.from[2]).slice(-2)}/${(
-                            "0" + leave.from[1]
-                          ).slice(-2)}/${leave.from[0]}`}</td>
-                          <td>{`${("0" + leave.to[2]).slice(-2)}/${(
-                            "0" + leave.to[1]
-                          ).slice(-2)}/${leave.to[0]}`}</td>
-                          <td>
-                            <span
-                              className={`status ${leave.status.toLowerCase()}`}
-                            >
-                              {leave.status}
-                            </span>
-                          </td>
+                      {displayedData.length === 0 ? (
+                        <tr>
+                          <td className="noLeavesFound" colSpan="5">No leave applications found</td>
                         </tr>
-                      ))}
+                      ) : (
+                        displayedData.map((leave) => (
+                          <tr key={leave.id}>
+                            <td>{`${("0" + leave.appliedOn[2]).slice(-2)}/${(
+                              "0" + leave.appliedOn[1]
+                            ).slice(-2)}/${leave.appliedOn[0]}`}</td>
+                            <td>{leave.reason}</td>
+                            <td>{`${("0" + leave.from[2]).slice(-2)}/${(
+                              "0" + leave.from[1]
+                            ).slice(-2)}/${leave.from[0]}`}</td>
+                            <td>{`${("0" + leave.to[2]).slice(-2)}/${(
+                              "0" + leave.to[1]
+                            ).slice(-2)}/${leave.to[0]}`}</td>
+                            <td>
+                              <span
+                                className={`status ${leave.status.toLowerCase()}`}
+                              >
+                                {leave.status}
+                              </span>
+                            </td>
+                          </tr>
+                        ))
+                      )}
                     </tbody>
                   </table>
                   <ReactPaginate
