@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import ReactPaginate from "react-paginate";
+import React, { useEffect, useState, useMemo } from "react";
+import { useTable, useFilters } from "react-table";
+// import ReactPaginate from "react-paginate";
 import Base from "../components/Base";
 import "../styles/dashboard.css";
 import "../styles/leaveApplication.css";
@@ -54,19 +55,19 @@ const Leave = () => {
     }
   };
 
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
+  // const [currentPage, setCurrentPage] = useState(0);
+  // const itemsPerPage = 10;
 
-  const pageCount = Math.ceil(leaveData.length / itemsPerPage);
+  // const pageCount = Math.ceil(leaveData.length / itemsPerPage);
 
-  const handlePageChange = ({ selected }) => {
-    setCurrentPage(selected);
-  };
+  // const handlePageChange = ({ selected }) => {
+  //   setCurrentPage(selected);
+  // };
 
-  const displayedData = leaveData.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
-  );
+  // const displayedData = leaveData.slice(
+  //   currentPage * itemsPerPage,
+  //   (currentPage + 1) * itemsPerPage
+  // );
 
   const [open, setOpen] = useState(false);
 
@@ -124,7 +125,7 @@ const Leave = () => {
     leaveFrom: "",
     leaveTo: "",
     leaveType: "",
-    leaveCount: ""
+    leaveCount: "",
   });
 
   const handleChange = (e) => {
@@ -134,17 +135,20 @@ const Leave = () => {
       [name]: value,
     }));
 
-    setDaysCountAvailable(false)
+    setDaysCountAvailable(false);
 
     // Check if leaveFrom and leaveTo dates are the same
-    if (name === 'leaveFrom' || name === 'leaveTo') {
-      const from = name === 'leaveFrom' ? value : formData.leaveFrom;
-      const to = name === 'leaveTo' ? value : formData.leaveTo;
+    if (name === "leaveFrom" || name === "leaveTo") {
+      const from = name === "leaveFrom" ? value : formData.leaveFrom;
+      const to = name === "leaveTo" ? value : formData.leaveTo;
 
       if (from && to && from === to) {
         setDaysCountAvailable(false);
       } else {
-        formData.leaveCount=""
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          leaveCount: "",
+        }));
         setDaysCountAvailable(true);
       }
     }
@@ -165,7 +169,7 @@ const Leave = () => {
         }
       );
       const { success, message } = response.data;
-      console.log(response.data);
+      // console.log(response.data);
 
       if (success) {
         toast.success(message);
@@ -175,7 +179,7 @@ const Leave = () => {
           leaveFrom: "",
           leaveTo: "",
           leaveType: "",
-          leaveCount:""
+          leaveCount: "",
         });
         setSubmitSuccess(true);
       } else {
@@ -193,12 +197,83 @@ const Leave = () => {
     fetchLeaveDetails();
   }, [submitSuccess]);
 
-
   const [daysCountAvailable, setDaysCountAvailable] = useState(true);
+
+  const columns = useMemo(
+    () => [
+      {
+        Header: "Applied On",
+        accessor: "appliedOn",
+        Cell: ({ value }) => formatDate(value),
+      },
+      { Header: "Reason", accessor: "reason" },
+      {
+        Header: "Absence From",
+        accessor: "from",
+        Cell: ({ value }) => formatDate(value),
+      },
+      {
+        Header: "Absence To",
+        accessor: "to",
+        Cell: ({ value }) => formatDate(value),
+      },
+      {
+        Header: "Type",
+        accessor: "type",
+        Cell: ({ value }) => (
+          <span className={`type ${value.toLowerCase()}`}>{value}</span>
+        ),
+      },
+      { Header: "Overflow", accessor: "overflow" },
+      {
+        Header: "Status",
+        accessor: "status",
+        Cell: ({ value }) => (
+          <span className={`status ${value.toLowerCase()}`}>{value}</span>
+        ),
+      },
+    ],
+    []
+  );
+
+  const {
+    getTableProps,
+    getTableBodyProps,
+    headerGroups,
+    rows,
+    prepareRow,
+    setFilter,
+  } = useTable(
+    {
+      columns,
+      data: leaveData,
+    },
+    useFilters
+  );
+
+  const formatDate = (dateString) => {
+    if (!dateString) return "N/A"; // Fallback value if date is missing
+
+    // Parse the date string into a Date object
+    const date = new Date(dateString);
+
+    // Check if the parsed date is valid
+    if (isNaN(date.getTime())) {
+      console.error("Invalid date:", dateString);
+      return "Invalid Date";
+    }
+
+    // Format the date as desired (DD/MM/YYYY)
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
+  };
 
   return (
     <>
-      <Base page="leaves" />
+      <Base page="leave" />
       <div id="content">
         <main>
           <div className="table-data">
@@ -223,7 +298,15 @@ const Leave = () => {
                         </div>
                         <div class="div2">
                           <button onClick={handleClose}>
-                          <svg className="bx" xmlns="http://www.w3.org/2000/svg" height="24" viewBox="0 -960 960 960" width="24"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
+                            <svg
+                              className="bx"
+                              xmlns="http://www.w3.org/2000/svg"
+                              height="24"
+                              viewBox="0 -960 960 960"
+                              width="24"
+                            >
+                              <path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z" />
+                            </svg>
                           </button>
                         </div>
                         <div class="div3">
@@ -244,6 +327,7 @@ const Leave = () => {
                             value={formData.leaveType}
                             onChange={handleChange}
                           >
+                            <option value="">Select Leave Type</option>
                             <option value="PRIVILEGE">Privilege Leave</option>
                             <option value="MATERNITY">Maternity Leave</option>
                             <option value="PATERNITY">Paternity Leave</option>
@@ -269,10 +353,20 @@ const Leave = () => {
                             value={formData.leaveTo}
                           />
                         </div>
-                        <div className={daysCountAvailable ? 'div7 disabled' : 'div7'}>
-                          <span>Day Count <span className="innerText">(only for leaves of day &lt;= 1)</span></span>
+                        <div
+                          className={
+                            daysCountAvailable ? "div7 disabled" : "div7"
+                          }
+                        >
+                          <span>
+                            Day Count{" "}
+                            <span className="innerText">
+                              (only for leaves of day &lt;= 1)
+                            </span>
+                          </span>
                           <input
                             step={0.5}
+                            min={0}
                             type="number"
                             id="leaveCount"
                             name="leaveCount"
@@ -289,62 +383,49 @@ const Leave = () => {
                   </Box>
                 </Modal>
               </div>
-              <table>
-                <thead>
-                  <tr>
-                    <th>Applied On</th>
-                    <th>Reason</th>
-                    <th>Absence From</th>
-                    <th>Absence To</th>
-                    <th>Type</th>
-                    <th>Overflow</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {leaveData.length === 0 ? (
-                    <tr>
-                      <td className="noLeavesFound" colSpan="6">
-                        No leave applications found
-                      </td>
-                    </tr>
-                  ) : (
-                    displayedData.map((leave) => (
-                      <tr key={leave.id}>
-                        <td>{`${("0" + leave.appliedOn[2]).slice(-2)}/${(
-                          "0" + leave.appliedOn[1]
-                        ).slice(-2)}/${leave.appliedOn[0]}`}</td>
-                        <td>{leave.reason}</td>
-                        <td>{`${("0" + leave.from[2]).slice(-2)}/${(
-                          "0" + leave.from[1]
-                        ).slice(-2)}/${leave.from[0]}`}</td>
-                        <td>{`${("0" + leave.to[2]).slice(-2)}/${(
-                          "0" + leave.to[1]
-                        ).slice(-2)}/${leave.to[0]}`}</td>
-                        <td>
-                          <span className={`type ${leave.type.toLowerCase()}`}>
-                            {leave.type}
-                          </span>
-                        </td>
-                        <td>{leave.overflow}</td>
-                        <td>
-                          <span
-                            className={`status ${leave.status.toLowerCase()}`}
-                          >
-                            {leave.status}
-                          </span>
-                        </td>
+              <input
+                className="table-filter-search-field"
+                type="text"
+                placeholder="Search By Reason..."
+                onChange={(e) => setFilter("reason", e.target.value)}
+              />
+              <div className="table-div">
+                <table {...getTableProps()}>
+                  <thead>
+                    {headerGroups.map((headerGroup) => (
+                      <tr {...headerGroup.getHeaderGroupProps()}>
+                        {headerGroup.headers.map((column) => (
+                          <th {...column.getHeaderProps()}>
+                            {column.render("Header")}
+                          </th>
+                        ))}
                       </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
-              <ReactPaginate
+                    ))}
+                  </thead>
+                  <tbody {...getTableBodyProps()}>
+                    {rows.map((row) => {
+                      prepareRow(row);
+                      return (
+                        <tr {...row.getRowProps()}>
+                          {row.cells.map((cell) => {
+                            return (
+                              <td {...cell.getCellProps()}>
+                                {cell.render("Cell")}
+                              </td>
+                            );
+                          })}
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
+              {/* <ReactPaginate
                 pageCount={pageCount}
                 onPageChange={handlePageChange}
                 containerClassName={"pagination"}
                 activeClassName={"active"}
-              />
+              /> */}
             </div>
           </div>
         </main>

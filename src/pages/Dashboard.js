@@ -83,7 +83,7 @@ const Dashboard = () => {
   };
 
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 1; // Number of items to display per page
+  const itemsPerPage = 5; // Number of items to display per page
 
   // Pagination configuration
   const pageCount = Math.ceil(leaveData.length / itemsPerPage);
@@ -189,18 +189,55 @@ const Dashboard = () => {
           <Base page="dashboard" />
           <div id="content">
             <main>
-              <ul className="box-info calendars">
-                <li className="calendars">
-                  <Calendar
-                    showNeighboringMonth={false}
-                    tileClassName={({ date }) => {
-                      if (date.getDay() === 0 || date.getDay() === 6) {
-                        return "weekend";
-                      } else {
-                        return "normal";
-                      }
-                    }}
-                  />
+              <ul className="box-info dashboard">
+                <li className="dailyEvent">
+                  <span className="dailyEventHeader">
+                    <svg
+                      className="bx"
+                      xmlns="http://www.w3.org/2000/svg"
+                      height="10"
+                      width="10"
+                      viewBox="0 -960 960 960"
+                    >
+                      <path d="M360-300q-42 0-71-29t-29-71q0-42 29-71t71-29q42 0 71 29t29 71q0 42-29 71t-71 29ZM200-80q-33 0-56.5-23.5T120-160v-560q0-33 23.5-56.5T200-800h40v-80h80v80h320v-80h80v80h40q33 0 56.5 23.5T840-720v560q0 33-23.5 56.5T760-80H200Zm0-80h560v-400H200v400Zm0-480h560v-80H200v80Zm0 0v-80 80Z" />
+                    </svg>
+                    &nbsp;Todays Events
+                  </span>
+                  <ul>
+                    <li className="work">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="20"
+                        width="20"
+                        viewBox="0 -960 960 960"
+                      >
+                        <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
+                      </svg>
+                      Client Call - 2PM
+                    </li>
+                    <li className="normal">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="20"
+                        width="20"
+                        viewBox="0 -960 960 960"
+                      >
+                        <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
+                      </svg>
+                      Fun Friday - 5PM - @23rd Floor
+                    </li>
+                    <li className="normal">
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        height="20"
+                        width="20"
+                        viewBox="0 -960 960 960"
+                      >
+                        <path d="M480-160q-33 0-56.5-23.5T400-240q0-33 23.5-56.5T480-320q33 0 56.5 23.5T560-240q0 33-23.5 56.5T480-160Zm0-240q-33 0-56.5-23.5T400-480q0-33 23.5-56.5T480-560q33 0 56.5 23.5T560-480q0 33-23.5 56.5T480-400Zm0-240q-33 0-56.5-23.5T400-720q0-33 23.5-56.5T480-800q33 0 56.5 23.5T560-720q0 33-23.5 56.5T480-640Z" />
+                      </svg>
+                      Womens Day Seminar - 5PM - @23rd Floor
+                    </li>
+                  </ul>
                 </li>
                 <li className="calendars">
                   <Calendar
@@ -232,7 +269,7 @@ const Dashboard = () => {
                 </li>
               </ul>
               <ul className="box-info">
-                <li>
+                <li className="widgets">
                   <svg
                     className="bx"
                     xmlns="http://www.w3.org/2000/svg"
@@ -247,7 +284,7 @@ const Dashboard = () => {
                     <p>Projects Assigned</p>
                   </span>
                 </li>
-                <li>
+                <li className="widgets">
                   <svg
                     className="bx"
                     xmlns="http://www.w3.org/2000/svg"
@@ -274,7 +311,7 @@ const Dashboard = () => {
                     <p>Can Leave By</p>
                   </span>
                 </li>
-                <li>
+                <li className="widgets">
                   <svg
                     className="bx"
                     xmlns="http://www.w3.org/2000/svg"
@@ -294,6 +331,102 @@ const Dashboard = () => {
               <div className="table-data">
                 <div className="order">
                   <div className="head">
+                    <h3>Your Notifications</h3>
+                  </div>
+                  <div className="table-div">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Dated</th>
+                          <th>From</th>
+                          <th>Message</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {leaveData.length === 0 ? (
+                          <tr>
+                            <td className="noLeavesFound" colSpan="5">
+                              No leave applications found
+                            </td>
+                          </tr>
+                        ) : (
+                          leaveData.map((leave) => (
+                            <tr key={leave.id}>
+                              <td>{leave.reason}</td>
+                              <td>{`${("0" + leave.from[2]).slice(-2)}/${(
+                                "0" + leave.from[1]
+                              ).slice(-2)}/${leave.from[0]}`}</td>
+                              <td>
+                                <span>Client Meeting is rescheduled</span>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                  {/* <ReactPaginate
+                    pageCount={pageCount}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"active"}
+                  /> */}
+                </div>
+                <div className="order">
+                  <div className="head">
+                    <h3>Your Leave Applications</h3>
+                  </div>
+                  <div className="table-div">
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Reason</th>
+                          <th>Absence From</th>
+                          <th>Absence To</th>
+                          <th>Status</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {displayedData.length === 0 ? (
+                          <tr>
+                            <td className="noLeavesFound" colSpan="5">
+                              No leave applications found
+                            </td>
+                          </tr>
+                        ) : (
+                          displayedData.map((leave) => (
+                            <tr key={leave.id}>
+                              <td>{leave.reason}</td>
+                              <td>{`${("0" + leave.from[2]).slice(-2)}/${(
+                                "0" + leave.from[1]
+                              ).slice(-2)}/${leave.from[0]}`}</td>
+                              <td>{`${("0" + leave.to[2]).slice(-2)}/${(
+                                "0" + leave.to[1]
+                              ).slice(-2)}/${leave.to[0]}`}</td>
+                              <td>
+                                <span
+                                  className={`status ${leave.status.toLowerCase()}`}
+                                >
+                                  {leave.status}
+                                </span>
+                              </td>
+                            </tr>
+                          ))
+                        )}
+                      </tbody>
+                    </table>
+                  </div>
+                  <ReactPaginate
+                    pageCount={pageCount}
+                    onPageChange={handlePageChange}
+                    containerClassName={"pagination"}
+                    activeClassName={"active"}
+                  />
+                </div>
+              </div>
+              <div className="table-data">
+                <div className="order">
+                  <div className="head">
                     <h3>Your Leave Applications</h3>
                   </div>
                   <table>
@@ -307,41 +440,13 @@ const Dashboard = () => {
                       </tr>
                     </thead>
                     <tbody>
-                      {displayedData.length === 0 ? (
-                        <tr>
-                          <td className="noLeavesFound" colSpan="5">No leave applications found</td>
-                        </tr>
-                      ) : (
-                        displayedData.map((leave) => (
-                          <tr key={leave.id}>
-                            <td>{`${("0" + leave.appliedOn[2]).slice(-2)}/${(
-                              "0" + leave.appliedOn[1]
-                            ).slice(-2)}/${leave.appliedOn[0]}`}</td>
-                            <td>{leave.reason}</td>
-                            <td>{`${("0" + leave.from[2]).slice(-2)}/${(
-                              "0" + leave.from[1]
-                            ).slice(-2)}/${leave.from[0]}`}</td>
-                            <td>{`${("0" + leave.to[2]).slice(-2)}/${(
-                              "0" + leave.to[1]
-                            ).slice(-2)}/${leave.to[0]}`}</td>
-                            <td>
-                              <span
-                                className={`status ${leave.status.toLowerCase()}`}
-                              >
-                                {leave.status}
-                              </span>
-                            </td>
-                          </tr>
-                        ))
-                      )}
+                      <tr>
+                        <td className="noDataFound" colSpan="5">
+                          No leave applications found
+                        </td>
+                      </tr>
                     </tbody>
                   </table>
-                  <ReactPaginate
-                    pageCount={pageCount}
-                    onPageChange={handlePageChange}
-                    containerClassName={"pagination"}
-                    activeClassName={"active"}
-                  />
                 </div>
               </div>
               <Toaster richColors />
