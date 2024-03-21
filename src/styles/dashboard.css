@@ -24,7 +24,7 @@ li {
 	--grey: #eee;
 	--dark-grey: #AAAAAA;
 	--dark: #342E37;
-	--light-dark: #F9F9F9;
+	--light-dark: #AAAAAA;
 	--red: #DB504A;
 	--yellow: #FFCE26;
 	--light-yellow: #FFF2C6;
@@ -33,12 +33,13 @@ li {
 	--green: #65B741;
 	--light-green: #84b071;
 
-	--form-bg: #ffffff; /* White background */
-  --form-field: #f0f0f0; /* Light gray for enabled form fields */
-  --form-field-disabled: lightgray; /* Lighter gray for disabled form fields */
+	--form-bg: #f7f7f7; /* White background */
+  --form-field: lightgray; /* Light gray for enabled form fields */
+  --form-field-disabled: #f0f0f0; /* Lighter gray for disabled form fields */
   --form-font: #333333; /* Dark gray for form text */
   --form-font-disabled: #999999; /* Lighter gray for disabled form text */
   --form-field-border: #ccc;
+  --form-field-font: #333333;
 
 	/* BOX-INFO COLORS */
 	--base-red: #cd5c5c;
@@ -52,6 +53,8 @@ li {
 	--base-purple: #9400d3;
 	--mid-purple: #fff0f5;
 	--top-purple: #66023c;
+
+	--project-card-color:  #787A91;
 
 	/* CALENDAR COLORS */
 	--calendar-back: #f5f5f5;
@@ -82,6 +85,10 @@ body.dark {
     --form-font: #ffffff; /* White for form text */
     --form-font-disabled: #b0b0b0; /* Light gray for disabled form text */
 	--form-field-border: #342E37;
+	--form-field-font: #333333;
+
+
+	--project-card-color: #404258;
 }
 
 body {
@@ -631,7 +638,62 @@ body {
 	text-align: left;
 }
 
-#content main .box-info.calendars li {
+#content main .box-info.dashboard li.dailyEvent span {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	padding-bottom: 10px;
+	border-bottom: 2px solid var(--dark);
+	font-weight: 600;
+}
+
+#content main .box-info.dashboard li.dailyEvent span svg{
+	fill: var(--dark);
+	padding: 0;
+	height: 30px;
+	width: 30px;
+}
+
+#content main .box-info.dashboard li.dailyEvent{
+	/* padding: 24px; */
+	background: var(--light);
+	display: flex;
+	align-items: start;
+	flex-direction: column;
+	text-align: left;
+}
+
+#content main .box-info.dashboard li.dailyEvent ul{
+	display: flex;
+	flex-direction: column;
+	align-items:  start;
+	text-align: left;
+}
+
+#content main .box-info.dashboard li.dailyEvent ul li{
+	display: flex;
+	flex-direction: row;
+	justify-content: left;
+	grid-gap: 0;
+	font-size: 12px;
+	font-weight: 400;
+	background: none;
+	padding:10px 0;
+}
+
+#content main .box-info.dashboard li.dailyEvent ul li svg{
+	fill: var(--dark);
+}
+
+#content main .box-info.dashboard li.dailyEvent ul li.work{
+	color: var(--base-green);
+}
+
+#content main .box-info.dashboard li.dailyEvent ul li.work svg{
+	fill: var(--base-green);
+}
+
+#content main .box-info.dashboard li {
 	padding: 24px;
 	background: var(--light);
 	border-radius: 20px;
@@ -726,82 +788,82 @@ body {
 
 
 /* Blue */
-#content main .box-info li:not(.calendars):nth-child(3n+1) {
+#content main .box-info li.widgets:nth-child(3n+1) {
 	background: var(--base-purple);
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+1) .bx {
+#content main .box-info li.widgets:nth-child(3n+1) .bx {
 	background: var(--mid-purple);
 	fill: var(--top-purple);
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+1) .text,
-#content main .box-info li:not(.calendars):nth-child(3n+1) .text p {
+#content main .box-info li.widgets:nth-child(3n+1) .text,
+#content main .box-info li.widgets:nth-child(3n+1) .text p {
 	color: var(--mid-purple);
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+1) .text .first {
+#content main .box-info li.widgets:nth-child(3n+1) .text .first {
 	font-size: 24px;
 	font-weight: 800;
 	padding-right: 2px;
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+1) .text .second {
+#content main .box-info li.widgets:nth-child(3n+1) .text .second {
 	font-size: 24px;
 	font-weight: 400;
 }
 
 /* Green */
-#content main .box-info li:not(.calendars):nth-child(3n+2) {
+#content main .box-info li.widgets:nth-child(3n+2) {
 	background: var(--base-green);
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+2) .bx {
+#content main .box-info li.widgets:nth-child(3n+2) .bx {
 	background: var(--mid-green);
 	fill: var(--top-green);
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+2) .text,
-#content main .box-info li:not(.calendars):nth-child(3n+2) .text p {
+#content main .box-info li.widgets:nth-child(3n+2) .text,
+#content main .box-info li.widgets:nth-child(3n+2) .text p {
 	color: var(--mid-green);
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+2) .text .first {
+#content main .box-info li.widgets:nth-child(3n+2) .text .first {
 	font-size: 24px;
 	font-weight: 800;
 	padding-right: 2px;
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+2) .text .second {
+#content main .box-info li.widgets:nth-child(3n+2) .text .second {
 	font-size: 24px;
 	font-weight: 400;
 }
 
 /* Red */
-#content main .box-info li:not(.calendars):nth-child(3n+3) {
+#content main .box-info li.widgets:nth-child(3n+3) {
 	background: var(--base-red);
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+3) .bx {
+#content main .box-info li.widgets:nth-child(3n+3) .bx {
 	background: var(--mid-red);
 	fill: var(--top-red);
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+3) .text,
-#content main .box-info li:not(.calendars):nth-child(3n+3) .text p {
+#content main .box-info li.widgets:nth-child(3n+3) .text,
+#content main .box-info li.widgets:nth-child(3n+3) .text p {
 	color: var(--mid-red);
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+3) .text .first {
+#content main .box-info li.widgets:nth-child(3n+3) .text .first {
 	font-size: 24px;
 	font-weight: 800;
 	padding-right: 2px;
 }
 
-#content main .box-info li:not(.calendars):nth-child(3n+3) .text .second {
+#content main .box-info li.widgets:nth-child(3n+3) .text .second {
 	font-size: 24px;
 	font-weight: 400;
 }
@@ -836,8 +898,112 @@ body {
 
 
 
+/* Project Page ------------------------------------------------------------------------------*/
+#content main .box-info.project-total li.widgets.projects,
+#content main .box-info.project-status li.widgets.projects {
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
+	justify-content: center;
+}
+
+#content main .box-info.project-total li.widgets.projects h1,
+#content main .box-info.project-status li.widgets.projects h1 {
+	color: white;
+}
+
+body #content main .box-info li.widgets.projects:hover{
+	cursor: pointer;
+	box-shadow: 0px 16px 48px 0px rgba(0, 0, 0, 0.176);
+	transition: 0.3s ease;
+}
+
+body.dark #content main .box-info li.widgets.projects:hover{
+	cursor: pointer;
+	box-shadow: 0px 16px 48px 0px rgba(255, 255, 255, 0.176);
+	transition: 0.3s ease;
+}
+
+#content main .box-info li.widgets.projects .text{
+	text-align: center;
+}
 
 
+#content main .box-info.project-status li.widgets {
+	background: var(--project-card-color);
+	box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 20px;
+}
+
+#content main .box-info.project-total li.widgets.projects{
+	background: #333333;
+}
+
+#content main .box-info.project-total li.widgets.projects p{
+	color: #545F66;
+}
+
+#content main .box-info.project-status li.widgets.status-new{
+	background: #2A3637;
+}
+
+#content main .box-info.project-status li.widgets.status-new p{
+	color: #3C6997;
+}
+
+#content main .box-info.project-status li.widgets.status-inProgress{
+	background: #2A3637;
+}
+
+#content main .box-info.project-status li.widgets.status-inProgress p{
+	color: #ACBEA3;
+}
+
+#content main .box-info.project-status li.widgets.status-onHold{
+	background: #2A3637;
+}
+
+#content main .box-info.project-status li.widgets.status-onHold p{
+	color: #B8B42D;
+}
+
+#content main .box-info.project-status li.widgets.status-completed{
+	background: #143109;
+}
+
+#content main .box-info.project-status li.widgets.status-completed p{
+	color: #ABE188;
+}
+
+#content main .box-info.project-status li.widgets.status-cancelled{
+	background: #400905;
+}
+
+#content main .box-info.project-status li.widgets.status-cancelled p{
+	color: #B76D68;
+}
+
+/* #content main .box-info.project-status li.widgets:nth-child(3n+1) .text,
+#content main .box-info.project-status li.widgets:nth-child(3n+1) .text p {
+	color: var(--mid-purple);
+}
+
+#content main .box-info.project-status li.widgets:nth-child(3n+1) .text .first {
+	font-size: 24px;
+	font-weight: 800;
+	padding-right: 2px;
+}
+
+#content main .box-info.project-status li.widgets:nth-child(3n+1) .text .second {
+	font-size: 24px;
+	font-weight: 400;
+} */
+
+
+
+
+
+
+
+
+/* Project Page ------------------------------------------------------------------------------*/
 #content main .table-data {
 	display: flex;
 	flex-wrap: wrap;
@@ -875,6 +1041,33 @@ body {
 	flex-grow: 1;
 	flex-basis: 500px;
 }
+
+#content main .table-data .order .table-filter-search-field{
+	display: flex;
+	align-items: center;
+	justify-content: right;
+	width: 60%;
+    padding: 5px;
+    color: var(--form-field-font);
+    background-color: var(--light);
+    border: 1px solid var(--light-dark);
+    border-radius: 5px;
+    font-size: 14px;
+    margin-bottom: 10px;
+    box-sizing: border-box;
+    transition: border-color 0.3s;
+}
+
+#content main .table-data .order .table-filter-search-field:focus-visible{
+	border: 1px solid var(--blue) !important;
+}
+
+#content main .table-data .order .table-div{
+	height: 250px;
+	overflow-y: auto;
+}
+
+
 
 .table-button {
 	display: flex;
@@ -933,7 +1126,7 @@ body {
 	text-align: left;
 }
 
-.noLeavesFound,.noEmployeesFound{
+.noDataFound{
 	color: var(--dark-grey);
     text-align: left;
     font-style: italic;
@@ -1046,6 +1239,31 @@ body {
 #content main .table-data .order table tbody tr:hover {
 	background: var(--grey);
 }
+
+
+
+.table-container {
+	max-height: 300px;
+	/* Set the maximum height for the table */
+	overflow-y: auto;
+	/* Enable vertical scroll */
+}
+
+.table-container th {
+	background-color: var(--light-dark);
+	/* Header background color */
+	position: sticky;
+	top: 0;
+}
+
+.table-container thead th {
+	z-index: 1;
+	/* Ensure header is above body during scroll */
+}
+
+
+
+
 
 #content main .table-data .order table tr td .status {
 	font-size: 10px;

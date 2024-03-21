@@ -22,8 +22,8 @@
 .addLeaveParent select {
     width: 100%;
     padding: 10px;
-    color: var(--form-font);
-    background-color: var(--form-field);
+    color: var(--form-field-font);
+    background-color: var(--form-field-disabled);
     border: 1px solid var(--form-field-border);
     border-radius: 5px;
     font-size: 16px;
@@ -38,11 +38,11 @@
 }
 
 .addLeaveParent .div7.disabled span{
-    color: var(--form-font-disabled)  
+    color: var(--form-font)  
 }
 
 .addLeaveParent .div7.disabled input[type="number"]{
-    background-color: var(--form-field-disabled);
+    background-color: var(--form-field);
     cursor: not-allowed;  
 }
 
@@ -61,8 +61,8 @@
 .addLeaveParent input[type="date"] {
     width: 100%;
     padding: 10px;
-    background-color: var(--form-field);
-    color: var(--form-font);
+    background-color: var(--form-field-disabled);
+    color: var(--form-field-font);
     border: 1px solid var(--form-field-border);
     border-radius: 5px;
     font-size: 16px;
