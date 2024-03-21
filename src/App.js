@@ -8,6 +8,7 @@ import Attendance from './pages/Attendance';
 import AddUser from './pages/AddUser';
 import Landing from './pages/Landing';
 import Leave from './pages/Leave';
+import Project from './pages/Project';
 
 function App() {
   const employeeId = localStorage.getItem("employeeId")
@@ -21,6 +22,7 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path='/user/leave' element={<Leave />} />
         <Route path="/user/attendance" element={<Attendance />} />
+        <Route path="/user/project" element={<Project/>}/>
         <Route path="/admin/addUser" element={<AddUser />} />
       </Routes>
     </div>
