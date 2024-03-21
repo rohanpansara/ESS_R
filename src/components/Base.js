@@ -130,7 +130,7 @@ const Base = ({ page }) => {
             </a>
           </li>
           <li className={page === "project" ? "active" : ""}>
-            <a href="/project">
+            <a href="/user/project">
               <svg
                 className="bx"
                 xmlns="http://www.w3.org/2000/svg"
@@ -143,7 +143,7 @@ const Base = ({ page }) => {
               <span className="text">Projects</span>
             </a>
           </li>
-          <li className={page === "leaves" ? "active" : ""}>
+          <li className={page === "leave" ? "active" : ""}>
             <a href="/user/leave">
               <svg
                 className="bx"
